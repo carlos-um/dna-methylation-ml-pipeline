@@ -7,13 +7,15 @@ by **Carlos C. Ureña Mateo** (University of Murcia, MSc Bioinformatics, 2025).
 
 ## Overview
 
-Lewy body diseases — including Parkinson’s disease (PD), Parkinson’s disease dementia (PDD), and dementia with Lewy bodies (DLB) — are neurodegenerative disorders for which disease-specific epigenetic alterations remain incompletely characterized. DNA methylation provides a high-resolution molecular layer to investigate whether these conditions can be distinguished from neurologically healthy controls based on epigenetic profiles.
+This project implements a **reproducible and modular computational pipeline** for the analysis of DNA methylation data, aimed at identifying epigenetic patterns with discriminative value through the integration of prior biological knowledge and supervised machine learning methods.
 
-In this thesis, a reproducible and modular bioinformatics pipeline was developed to analyze DNA methylation data using a hypothesis-driven strategy. Clinically curated gene panels were incorporated at the initial stages of the pipeline as prior biological knowledge to guide probe selection and reduce dimensionality before any statistical modeling.
+The pipeline combines **clinically curated gene panels** with complementary supervised classification algorithms — **Support Vector Machines (SVM)** and **Random Forests (RF)** — to reduce dimensionality in a biologically informed manner and improve model interpretability and robustness.
 
-Following this biologically informed filtering step, supervised machine learning models were applied to evaluate the discriminative capacity of panel-specific methylation profiles. Models were trained both at a global panel level and after stratification by functional genomic regions, enabling the detection of localized epigenetic signals associated with disease status rather than assuming shared methylation patterns across disorders.
+As a case study, the pipeline is applied to DNA methylation data from patients affected by **Lewy body–related neurodegenerative diseases**, including **Parkinson’s disease (PD)**, **Parkinson’s disease dementia (PDD)**, and **dementia with Lewy bodies (DLB)**, together with healthy control samples. This design enables the exploration of disease-specific epigenetic signatures while accounting for shared molecular and clinical characteristics across related disorders.
 
 ## Modules
+
+Each module is implemented as an independent script located in the `scripts/` directory, allowing flexible reuse or selective execution depending on the analysis requirements.
 
 ### 1. `train_test_split.ipynb`
 
@@ -102,7 +104,7 @@ Trains and evaluates binary classification models using supervised machine learn
 
 ### 6. `split_methylation_by_loci.R`
 
-Splits filtered probes into biologically meaningful genomic loci: Promoter, TSS200, TSS1500, Body, 1stExon, 5’UTR, 3’UTR y ExonBnd.
+Splits filtered probes into biologically meaningful genomic loci: Promoter, TSS200, TSS1500, Body, 1stExon, 5’UTR, 3’UTR and ExonBnd.
 
 **Input**
 - Filtered methylation matrix
@@ -157,24 +159,29 @@ Trains and evaluates binary classification models for each genomic locus and cli
 - Trained models
 - Cross-validated performance metrics per locus and clinical contrast
 
-
-## Methodology (As Used in This Study)
-
-In the original application of this pipeline:
-- Models were trained both at the **gene level** and **locus level**
-- Locus-based modeling was preferred due to the non-uniform distribution of DNA methylation across genes
-- Multiple clinical contrasts were evaluated independently
-- Model selection was based on cross-validated performance metrics
-
-This section describes **one possible use case**, not a constraint of the pipeline.
-
 ---
 
-## Requirements
+## Methodology (Case od study)
 
-- R (caret, biomaRt, tidyverse)
-- bedtools
-- Python (for data splitting notebook)
+This project implements a **modular, reproducible DNA methylation analysis pipeline**, designed to identify epigenetic patterns with discriminative value through integration of prior biological knowledge and supervised machine learning.
+
+**Data preparation**  
+Normalized methylation data and clinical metadata were split into **training (70%) and testing (30%) sets**, using stratification by diagnostic group and a fixed random seed (`train_test_split.ipynb`). Clinically relevant gene panels were obtained from **Genomics England PanelApp** and curated CSV sources, retaining only **high-evidence genes** (`get_green_genes_from_genomics_england()`, `get_high_evidence_genes_from_csv()`).
+
+**Panel-based probe filtering**  
+CpG probes overlapping panel genes were extracted to reduce dimensionality and focus on disease-relevant regions (`filter_methylation_by_genes()`).
+
+**Global panel-level modeling**  
+Binary classification models were trained for each panel and contrast (PD vs CTRL, PDD vs CTRL, DLB vs CTRL, neuro vs CTRL) using all retained probes (`prepare_for_ml_global()`, `train_models_all()`). Algorithms: **SVM (linear and radial)** and **Random Forest**, with 5-fold stratified cross-validation and automatic hyperparameter tuning. Performance was evaluated on independent test sets.
+
+**Locus-specific modeling**  
+Probes were grouped into **functional genomic regions** (promoter, TSS200, TSS1500, body, UTRs, exon boundaries) (`split_methylation_by_loci()`). Models were trained per **panel × locus × contrast** (`prepare_for_ml_loci()`, `train_models_loci()`), enabling detection of localized epigenetic signals.
+
+**Adjustment for clinical covariates**  
+Age and sex were incorporated into locus-level Random Forest models to assess their effect on model performance.
+
+**Results**  
+Performance metrics (Accuracy, Balanced Accuracy, Kappa, ROC AUC, p-values) are stored in a **structured results directory** organized by panel, locus, contrast, and model configuration.
 
 ---
 
