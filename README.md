@@ -1,4 +1,4 @@
-# MSc Bioinformatics Thesis – Lewy Body Disease DNA Methylation Analysis
+# Lewy Body Disease DNA Methylation Analysis
 
 This repository contains the scripts, results, and full documentation associated with my Master's thesis titled:
 
