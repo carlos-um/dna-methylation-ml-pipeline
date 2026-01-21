@@ -10,8 +10,8 @@ As a case study, the pipeline is applied to DNA methylation data from patients a
 
 For detailed methodology, comprehensive analyses, and complete results, see:
 - Full thesis report: [`report/LewyBody_Project_ES.pdf`](report/LewyBody_Project_ES.pdf)
-- Complete pipeline scripts: `scripts/` directory
-- Analysis results: `results/` directory
+- Pipeline implementation: [`scripts/`](scripts/)
+- Analysis results: [`results/`](results/)
 
 
 ## Key Findings
