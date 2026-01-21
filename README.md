@@ -13,7 +13,7 @@ The pipeline combines **clinically curated gene panels** with complementary supe
 
 As a case study, the pipeline is applied to DNA methylation data from patients affected by **Lewy body–related neurodegenerative diseases**, including **Parkinson’s disease (PD)**, **Parkinson’s disease dementia (PDD)**, and **dementia with Lewy bodies (DLB)**, together with healthy control samples. This design enables the exploration of disease-specific epigenetic signatures while accounting for shared molecular and clinical characteristics across related disorders.
 
-For a detailed description of the methodology, analyses, and complete results, see the full project report in Spanish: [`LewyBody_Project_ES.pdf`](LewyBody_Project_ES.pdf) or in English: [`LewyBody_Project_EN.pdf`](LewyBody_Project_EN.pdf).
+For a detailed description of the methodology, analyses, and complete results, see the full project report in Spanish: [`report/Semantic_analysis_muscular_dystonia.pdf`](report/Semantic_analysis_muscular_dystonia.pdf).
 
 ---
 
