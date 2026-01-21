@@ -177,6 +177,13 @@ All performance metrics and model outputs are stored in the `results/` directory
 
 ---
 
+## Author
+
+**Carlos C. Ureña Mateo**  
+MSc Bioinformatics – University of Murcia
+
+---
+
 ## License
 
 This repository is provided for academic and research purposes. Please cite the thesis if used in your work.
